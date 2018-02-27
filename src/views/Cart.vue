@@ -255,15 +255,18 @@
                 }else{
                     item.checked = item.checked=="1"?'0':'1';
                 }
-
-                axios.post("/users/cartEdit",{
+              axios.post("/users/cartEdit",{
                     productId:item.productId,
                     productNum:item.productNum,
                     checked:item.checked
                 }).then((response)=>{
                     let res = response.data;
                     if(res.status=="0"){
-                      this.$store.commit("updateCartCount",flag=="add"?1:-1);
+                        if(flag == "add"){
+                            this.$store.commit("updateCartCount",1);
+                        }else if(flag == "minu"){
+                            this.$store.commit("updateCartCount",-1);
+                        }
                     }
                 })
             },
